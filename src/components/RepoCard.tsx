@@ -9,14 +9,14 @@ export const RepoCard = ({repo}: { repo: IRepo }) => {
     const {addFavorite, removeFavorite} = useActions()
 
     const addFavoriteClick = () => {
-        addFavorite(repo.html_url)
+        addFavorite(repo)
     }
 
     const removeFavoriteClick = () => {
-        removeFavorite(repo.html_url)
+        removeFavorite(repo.id)
     }
 
-    const repoIsFavorite = favorites.includes(repo.html_url)
+    const repoIsFavorite = !!favorites.find((fRepo) => fRepo.id === repo.id)
 
     return (
         <div
@@ -25,9 +25,13 @@ export const RepoCard = ({repo}: { repo: IRepo }) => {
                 <h2 className={'text-lg font-bold'}>{repo.full_name}</h2>
                 <p className={'text-sm'}>
                     Forks: <span className={'font-bold mr-2'}>{repo.forks}</span>
-                    Watchers: <span className={'font-bold'}>{repo.watchers}</span>
+                    Watchers: <span className={'font-bold'}>{repo.watchers}</span><br/>
                 </p>
                 <p className={'text-sm font-thin'}>{repo?.description}</p>
+                <div className={'flex items-center text-sm'}>
+                    <div className={'rounded-full p-2 bg-gray-800 h-[15px] w-[15px] mr-1'}></div>
+                    <p>{repo.language}</p>
+                </div>
             </a>
             {
                 repoIsFavorite
